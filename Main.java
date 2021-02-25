@@ -3,27 +3,14 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-        // write your code here
-        System.out.println("Hello world!");
-        var languages = new String[]{"C", "C++", "C#", "Python", "Go", "Rust", "JavaScript", "PHP", "Swift", "Java"};
-        //randomNum = minimum + (int)(Math.random() * maximum);
-        int n = (int) (Math.random() * 1_000_000);
-        n = n * 2;
-        n = n + 0b10101;
-        n = n + 0xFF;
-        n = n * 6;
-        System.out.println(n);
-        int sum1=0;
-        while(n!=0)
-        {
-            sum1=sum1+n%10;
-            n=n/10;
-            if(n==0 && sum1>=10)
-                {n=sum1; sum1=0;}
 
-        }
-        System.out.println(sum1);
+        int [][] Matrix = new int [4][4];
 
-        System.out.println("Willy-nilly, this semester I will learn " + languages[sum1]);
+        Matrix[0][0]=2; Matrix[0][1]=3; Matrix[0][2]=1; Matrix[0][3]=10;
+        Matrix[1][0]=5; Matrix[1][1]=4; Matrix[1][2]=8; Matrix[1][3]=35;
+        Matrix[2][0]=5; Matrix[2][1]=6; Matrix[2][2]=8; Matrix[2][3]=25;
+        Matrix[3][0]=20; Matrix[3][1]=25; Matrix[3][2]=25; Matrix[3][3]=0;
+        var example = new Problem(Matrix, 4);
+
     }
 }
