@@ -22,8 +22,17 @@ public class Main {
                 {n=sum1; sum1=0;}
 
         }
-        System.out.println(sum1);
 
         System.out.println("Willy-nilly, this semester I will learn " + languages[sum1]);
+
+        //optional
+
+        try {
+            var n2=Integer.parseInt(args[0]);
+            var optional = new Optional(2);
+        } catch (Exception e) {
+            System.out.println("Introdu un numar");
+            return;
+        }
     }
 }
