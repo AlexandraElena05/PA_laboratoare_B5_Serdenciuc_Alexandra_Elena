@@ -1,24 +1,22 @@
 package com.company;
 
-public class Sourse {
+import java.util.Objects;
+
+public abstract class Sourse extends Object {
     String name;
-    SourseType type;
+    int commodities;
 
-    public Sourse(String name, SourseType type){
+    public Sourse(String name, int commodities) {
         this.name = name;
-        this.type = type;
+        this.commodities = commodities;
     }
 
-    public Sourse() {
-        name = null;
+    public int getCommodities() {
+        return commodities;
     }
 
-    public SourseType getType() {
-        return type;
-    }
-
-    public void setType(SourseType type) {
-        this.type = type;
+    public void setCommodities(int commodities) {
+        this.commodities = commodities;
     }
 
     public String getName() { return name; }
@@ -26,10 +24,18 @@ public class Sourse {
 
     @Override
     public String toString() {
-        //return super.toString();
-        return "Sourse{" +
-                "name" + name + '\'' +
-                ", type= " + type +
-                '}';
+        return name;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Sourse)) return false;
+        Sourse sourse = (Sourse) o;
+        return getName().equals(sourse.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
     }
 }

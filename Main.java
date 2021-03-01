@@ -1,16 +1,31 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        int [][] Matrix = new int [4][4];
+        ArrayList<Sourse> sourses = new ArrayList<Sourse>();
+        sourses.add(new Factory("S1", 10));
+        sourses.add(new Factory("S2", 35));
+        sourses.add(new Warehouse("S3", 25));
 
-        Matrix[0][0]=2; Matrix[0][1]=3; Matrix[0][2]=1; Matrix[0][3]=10;
-        Matrix[1][0]=5; Matrix[1][1]=4; Matrix[1][2]=8; Matrix[1][3]=35;
-        Matrix[2][0]=5; Matrix[2][1]=6; Matrix[2][2]=8; Matrix[2][3]=25;
-        Matrix[3][0]=20; Matrix[3][1]=25; Matrix[3][2]=25; Matrix[3][3]=0;
-        var example = new Problem(Matrix, 4);
+        ArrayList<Destination> destinations = new ArrayList<Destination>();
+        destinations.add(new Destination("D1", 10));
+        destinations.add(new Destination("D2", 35));
+        destinations.add(new Destination("D3", 25));
 
+        int[][] matrix = {{2, 3, 1}, {5, 4, 8}, {5, 6, 8}};
+
+        var problem = new Problem(matrix, 3);
+        try {
+            problem.setSourses(sourses);
+            problem.setDestinations(destinations);
+            problem.PrintSolution();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
