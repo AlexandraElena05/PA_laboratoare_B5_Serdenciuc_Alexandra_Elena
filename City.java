@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class City {
@@ -12,6 +13,21 @@ public class City {
 
     public City() {
     }
+
+    public List<Location> freeLocation(){
+        var free = new ArrayList<Location>();
+        for (Location location:nodes
+             ) {
+            if(location instanceof Visitable && !(location instanceof Payable))
+                free.add(location);
+
+        }
+        //sort by openingHour
+        return free;
+
+
+    };
+
 
     public List<Location> getNodes() {
         return nodes;
