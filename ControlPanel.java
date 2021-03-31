@@ -14,6 +14,8 @@ public class ControlPanel extends JPanel {
     JButton loadBtn = new JButton("Load");
     JButton resetBtn = new JButton("Reset");
     JButton exitBtn = new JButton("Exit");
+    JRadioButton deleteBtn = new JRadioButton("Delete mode");
+    JRadioButton freeBtn = new JRadioButton("Free drawing");
 
     JFileChooser fc = new JFileChooser();
 
@@ -28,14 +30,27 @@ public class ControlPanel extends JPanel {
         loadBtn.addActionListener(this::load);
         resetBtn.addActionListener(this::reset);
         exitBtn.addActionListener(this::exit);
+        deleteBtn.addActionListener(this::delete);
+        freeBtn.addActionListener(this::free);
         this.add(saveBtn);
         this.add(loadBtn);
         this.add(resetBtn);
         this.add(exitBtn);
+        this.add(deleteBtn);
+        this.add(freeBtn);
     }
     private void reset(ActionEvent e){
         frame.getCanvas().resetAll();
     }
+
+    private void delete(ActionEvent e){
+        frame.getCanvas().setClearMode(deleteBtn.isSelected());
+    }
+
+    private void free(ActionEvent e){
+        frame.getCanvas().setFreeMode(freeBtn.isSelected());
+    }
+
     private void load(ActionEvent e){
         try {
             int returnVal = fc.showOpenDialog(this);
