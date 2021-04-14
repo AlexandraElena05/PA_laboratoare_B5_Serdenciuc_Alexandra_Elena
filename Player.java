@@ -1,22 +1,27 @@
 package com.company;
 
-import java.util.PrimitiveIterator;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Player implements Runnable{
     private String name;
     private Game game;
-    private Graph graph;
+    private List<Token> inputTokens = new ArrayList<>();
 
-    public Player(String s, Game game) {
-        this.name = s;
-        this.game = game;
-        this.graph = game.getBoard().getComplete();
+    public int getInputNumber() {
+        return inputNumber;
     }
 
-    public Player(String name, Game game, Graph graph) {
-        this.name = name;
-        this.game = game;
-        this.graph = graph;
+    public void setInputNumber(int inputNumber) {
+        this.inputNumber = inputNumber;
+    }
+
+    private int inputNumber;
+
+    public Player(String s) {
+        this.name = s;
     }
 
     public String getName() {
@@ -35,32 +40,48 @@ public class Player implements Runnable{
         this.game = game;
     }
 
-    public Graph getGraph() {
-        return graph;
+    public boolean checkIfHuman(){
+        if(game.getPlayerList().indexOf(this) < game.getPlayers())
+            return true;
+        return false;
     }
 
-    public void setGraph(Graph graph) {
-        this.graph = graph;
-    }
-
-    private boolean play() throws InterruptedException {
-        Board board = game.getBoard();
-        while(true) {
-            if (board.isEmpty()) {
-                return true;
+    public void selectPiece() {
+        if (!game.getBoard().getComplete().isEmpty()) {
+            if (checkIfHuman()) {
+                int firstValue, secondValue;
+                boolean taskSuccesful = false;
+                System.out.println( name + " input a piece: (first value, second value, separated by space)");
+                Scanner keyboard = new Scanner(System.in);
+                while (!taskSuccesful) {
+                    firstValue = keyboard.nextInt();
+                    secondValue = keyboard.nextInt();
+                    Token givenToken = new Token(firstValue, secondValue);
+                    if (game.getBoard().getComplete().getTokens().contains(givenToken)) {
+                        inputTokens.add(givenToken);
+                        game.getBoard().getComplete().getTokens().remove(givenToken);
+                        taskSuccesful = true;
+                        inputNumber += firstValue;
+                        inputNumber += secondValue;
+                    } else
+                        System.out.println("Invalid token");
+                }
+            } else {
+                int pieceIndex = ThreadLocalRandom.current().nextInt(0, game.getBoard().getComplete().getTokens().size());
+                inputTokens.add(game.getBoard().getComplete().getTokens().get(pieceIndex));
+                inputNumber+=game.getBoard().getComplete().getTokens().get(pieceIndex).getSource();
+                inputNumber+=game.getBoard().getComplete().getTokens().get(pieceIndex).getDestination();
+                game.getBoard().getComplete().getTokens().remove(pieceIndex);
+                System.out.println(name + " removed piece " + inputTokens.get(inputTokens.size() - 1));
             }
-            var t = board.extract();
-            graph.addToken(t);
-            System.out.println(this.name + " extracted token with value " + t.getValue());
-            Thread.sleep(THINKING_TIME); //declare this constant
         }
+
     }
 
+    @Override
     public void run() {
-        try {
-            play();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        while (!game.getBoard().getComplete().isEmpty()){
+            game.playerTurn(this);
         }
     }
 
@@ -71,8 +92,5 @@ public class Player implements Runnable{
                 "name='" + name + '\'' +
                 '}';
     }
-
-    private final static int THINKING_TIME = 2000;
-
 
 }

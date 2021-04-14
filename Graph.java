@@ -1,11 +1,10 @@
 package com.company;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 public class Graph {
-    List<Token> Tokens;
+    List<Token> Tokens = new LinkedList<>();
 
     public Graph(List<Token> Tokens) {
         this.Tokens = Tokens;

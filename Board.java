@@ -1,7 +1,5 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,24 +10,17 @@ public class Board {
         return complete;
     }
 
-    public Board(int n) {
-        List<Token> tokens = new ArrayList<>();
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = i + 1; j < n; j++) {
-                tokens.add(new Token(i, j));
+    public Board() {
+        List<Token> tokens = new LinkedList<>();
+        for(int i=1; i<=10; i++){
+            for(int j=1; j<=10; j++) {
+                if (i == j) {
+                    continue;
+                }
+                Token token = new Token(i, j);
+                tokens.add(token);
             }
         }
-
-        Collections.shuffle(tokens);
         complete = new Graph(tokens);
-    }
-
-    public synchronized Token extract(){
-       Token token = complete.pullFirst();
-       return token;
-    }
-
-    public Boolean isEmpty(){
-        return complete.isEmpty();
     }
 }
