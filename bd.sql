@@ -5,6 +5,12 @@ create table genres(
     constraint "pk1" primary key (id)
 )
     /
+create table persons(
+                        id integer generated always as identity (start with 1 increment by 1) not null,
+                        name varchar2(100) not null,
+                        constraint "pk1" primary key (id)
+)
+/
 
 create table movies(
     id integer generated always as identity (start with 1 increment by 1) not null,
@@ -24,6 +30,24 @@ create table movie_genres(
     constraint "fk2" foreign key (movie_id) references movies(id) on delete cascade,
     constraint "fk3" foreign key (genre_id) references genres(id) on delete cascade,
     constraint "pk3" primary key (movie_id, genre_id)
+)
+    /
+
+create table movie_actors(
+     movie_id integer not null,
+     actor_id integer not null,
+     constraint "fk2" foreign key (movie_id) references movies(id) on delete cascade,
+     constraint "fk3" foreign key (actor_id) references persons(id) on delete cascade,
+     constraint "pk3" primary key (movie_id, actor_id)
+)
+    /
+
+create table movie_directors(
+     movie_id integer not null,
+     director_id integer not null,
+     constraint "fk2" foreign key (movie_id) references movies(id) on delete cascade,
+     constraint "fk3" foreign key (director_id) references persons(id) on delete cascade,
+     constraint "pk3" primary key (movie_id, director_id)
 )
     /
 commit;
