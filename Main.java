@@ -1,29 +1,47 @@
-package com.company;
+import entity.Actor;
+import entity.Director;
+import entity.Genre;
+import entity.Movie;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class Main {
-
     public static void main(String[] args) {
-        // write your code here
-        System.out.println("Hello world!");
-        var languages = new String[]{"C", "C++", "C#", "Python", "Go", "Rust", "JavaScript", "PHP", "Swift", "Java"};
-        //randomNum = minimum + (int)(Math.random() * maximum);
-        int n = (int) (Math.random() * 1_000_000);
-        n = n * 2;
-        n = n + 0b10101;
-        n = n + 0xFF;
-        n = n * 6;
-        System.out.println(n);
-        int sum1=0;
-        while(n!=0)
-        {
-            sum1=sum1+n%10;
-            n=n/10;
-            if(n==0 && sum1>=10)
-                {n=sum1; sum1=0;}
+        Actor actor = new Actor();
+        actor.setName("Brad Pitt");
 
-        }
-        System.out.println(sum1);
+        Director director = new Director();
+        director.setName("Jean Annaud");
 
-        System.out.println("Willy-nilly, this semester I will learn " + languages[sum1]);
+        Movie movie = new Movie();
+        movie.setTitle("12 years in Tibet");
+        movie.setFilmId(12);
+        movie.setScore(8);
+        movie.setRelease_date(1997);
+
+        Genre genre = new Genre();
+        genre.setName("Drama");
+
+        movie.setDirector(director);
+        movie.addActor(actor);
+        movie.setGenre(genre);
+
+        var manager = PersistenceManager.getInstance();
+        EntityManagerFactory entityManagerFactory = manager.getEmf();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        //entityManager.persist(actor);
+        entityManager.persist(movie);
+        entityManager.persist(genre);
+        entityManager.persist(director);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        manager.closeEmf();
+
     }
 }
