@@ -24,6 +24,9 @@ public class SocialNetworkClient {
             } else {
                 try {
                     client.sendRequestToServer(request);
+                    if (request.equalsIgnoreCase("stop")) {
+                        break;
+                    }
                 }
                 catch (SocketException se){
                     System.out.println("Server shut down successfully!");
@@ -37,6 +40,9 @@ public class SocialNetworkClient {
     private String sendRequestToServer(String request) throws IOException {
         socket = new Socket(SERVER_ADDRESS, PORT);
         String resp = "";
+        // timeout after 100000 milliseconds
+        int timeOut = 100000;
+        this.socket.setSoTimeout(timeOut);
         try {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
