@@ -6,4 +6,7 @@ Compulsory:
 -created project for Client application which sends requests to server
 
 Optional:
--started object oriented model for commands (currently work in progress)
+-object oriented model for commands
+-stopped gracefully
+-implementation timeout
+-upload HTML with SFTP 
