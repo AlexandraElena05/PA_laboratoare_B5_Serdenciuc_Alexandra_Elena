@@ -1,10 +1,12 @@
 package com.example.lab11.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Person", schema = "public")
+@Table(name = "person", schema = "public")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,6 +15,14 @@ public class Person {
     @Column(name = "name")
     private String name;
 
+    public List<Long> getFriends() {
+        return friends;
+    }
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "list_of_friends", joinColumns = @JoinColumn(name = "person_id"))
+    private List<Long> friends = new ArrayList<Long>();
+
     public Person() {
     }
 
@@ -20,6 +30,9 @@ public class Person {
         this.name = name;
     }
 
+    public void addFriend(Long id){
+        friends.add(id);
+    }
     public long getId() {
         return id;
     }
